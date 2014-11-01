@@ -1,9 +1,9 @@
 package com.fabrizio.fantavalcanneto.persistence;
 
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 import com.fabrizio.fantavalcanneto.User;
+import com.fabrizio.fantavalcanneto.security.MailSender;
 import com.fabrizio.fantavalcanneto.security.Md5PasswordEncrypter;
 
 public class RegistraUtente {
@@ -20,16 +20,19 @@ public class RegistraUtente {
 		
 	}
 	
-	public boolean registraUtente(User user) throws SQLException, NoSuchAlgorithmException{
+	public boolean registraUtente(User user) throws Exception{
 		
-		Boolean inserito = true;
+		Boolean inserito = false;
 		PostgresDbConnector connector = new PostgresDbConnector();
 		Connection connection = null;
-		connection = connector.connectToDatabase();
+		connection = connector.connectToDB();
 		Statement st;
 		
 		Md5PasswordEncrypter passwordEncryptor = new Md5PasswordEncrypter();
-		String encryptedPassword = passwordEncryptor.encryptToMd5(user.getPassword());
+		String encryptedPassword = passwordEncryptor.encryptPasswordToMd5(user.getPassword());
+		
+		if(!(existsInTable(user.getUserName(), "users", "username")) || 
+				!(existsInTable(user.getEmail(), "users", "email"))){
 		
 		try {
 			java.util.Date dateTime = new java.util.Date();
@@ -47,11 +50,15 @@ public class RegistraUtente {
 				 				+ " '"+user.getEmail()+"');";
 				 				
 			st.execute(query);
+			inserito=true;
+			//TODO sistemare interfaccia con gmail
+			//MailSender.sendRegistrationNotificationMail(user.getEmail(), user.getNome(), user.getCognome());
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		connection.close();
+		}
 		return inserito;
 		
 		
@@ -61,13 +68,13 @@ public class RegistraUtente {
 		
 		PostgresDbConnector connector = new PostgresDbConnector();
 		Connection connection = null;
-		connection = connector.connectToDatabase();
+		connection = connector.connectToDB();
 		
 		boolean found = true;
 		Statement st;
 		try {
 			st = connection.createStatement();
-			 ResultSet rs = st.executeQuery("SELECT * FROM "+tableName+" WHERE "+columnName+" = "'"+value+"'");
+			 ResultSet rs = st.executeQuery("SELECT * FROM "+tableName+" WHERE "+columnName+" = '"+value+"'");
 			 if (!rs.next()){
 				 found = false;
 			 }

@@ -2,7 +2,8 @@ package com.fabrizio.fantavalcanneto;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
- 
+
+import org.postgresql.util.MD5Digest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.fabrizio.fantavalcanneto.persistence.RegistraUtente;
+import com.fabrizio.fantavalcanneto.security.Md5PasswordEncrypter;
  
 /**
  * Handles requests for the application home page.
@@ -42,13 +46,18 @@ public class HomeController {
     }
    
     @RequestMapping(value = "/registraUtente", method = RequestMethod.POST)
-    public String registraUtente(User user, Model model) {
-    	model.addAttribute("userName",user.getUserName());
-    	model.addAttribute("nome",user.getNome());
-    	model.addAttribute("cognome",user.getCognome());
-    	model.addAttribute("password",user.getPassword());
-    	model.addAttribute("email",user.getEmail());
-    	return "prova";
+    public String registraUtente(User user, Model model) throws Exception {
+    	
+    	String nextPage="";
+    	boolean registrazioneEffettuata = true;
+    	RegistraUtente registratore = new RegistraUtente();
+    	
+    	registrazioneEffettuata = registratore.registraUtente(user);
+    	
+    	nextPage=(registrazioneEffettuata? "RegistrazioneEffetuata" : "RegistrazioneFallita");
+    	
+    	return nextPage;
+    	
     }
     
     @RequestMapping(value = "/home", method = RequestMethod.POST)
