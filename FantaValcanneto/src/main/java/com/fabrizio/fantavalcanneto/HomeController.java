@@ -3,6 +3,9 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.postgresql.util.MD5Digest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fabrizio.fantavalcanneto.persistence.RegistraUtente;
+import com.fabrizio.fantavalcanneto.security.LoginManager;
 import com.fabrizio.fantavalcanneto.security.Md5PasswordEncrypter;
  
 /**
@@ -37,12 +42,16 @@ public class HomeController {
          
         model.addAttribute("serverTime", formattedDate );
          
-        return "FormRegistrazione";
+        return "login";
     }
      
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage(Locale locale, Model model) {
-        return "login";
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(User user, Model model, HttpSession session, 
+    		@RequestParam(value="errorMessage", required=false) String errorMessage,
+    		HttpServletRequest request) throws Exception {
+    	
+    	LoginManager lgmMgr = new LoginManager();
+    	return lgmMgr.loginUser(user.getUserName(), user.getPassword(), request);
     }
    
     @RequestMapping(value = "/registraUtente", method = RequestMethod.POST)
@@ -60,9 +69,4 @@ public class HomeController {
     	
     }
     
-    @RequestMapping(value = "/home", method = RequestMethod.POST)
-    public String login(@Validated User user, Model model) {
-        model.addAttribute("userName", user.getUserName());
-        return "user";
-    }
 }

@@ -7,9 +7,12 @@
 <title>Login Page</title>
 </head>
 <body>
-ciao
-<form action="home" method="post">
+login
+<%= request.getAttribute("error") %>
+
+<form action="login" method="post">
 <input type="text" name="userName"><br>
+<input type="text" name="password"><br>
 <input type="submit" value="Login">
 </form>
 </body>
