@@ -2,6 +2,7 @@ package com.fabrizio.fantavalcanneto.security;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ public class LoginManager {
 		
 		st = connection.createStatement();
 		
-		String query = "SELECT username, nome, cognome, email, descrizione FROM users,ruoli "
+		String query = "SELECT username, nome, cognome, email, user_id, descrizione FROM users,ruoli "
 				+ "WHERE username ='"+username+"' and password_hashed ='"+hashed_pwd+"'"
 				+"and users.ruolo_id = ruoli.id_ruolo";
 		
@@ -38,7 +39,7 @@ public class LoginManager {
 			user.setCognome(rs.getString("cognome"));
 			user.setEmail(rs.getString("email"));
 			user.setRole(rs.getString("descrizione"));
-			
+			setLoginTime(rs.getInt("user_id"));
 			SessionManager.session().setAttribute("user", user);
 			resultPage="home";
 			
@@ -49,6 +50,23 @@ public class LoginManager {
 		}
 		System.out.println("pagina" +resultPage);
 		return resultPage;
+		
+	}
+	
+	public void setLoginTime(int userId) throws SQLException{
+		PostgresDbConnector connector = new PostgresDbConnector();
+		Connection connection = null;
+		connection = connector.connectToDB();
+		Statement st;
+		
+		st = connection.createStatement();
+		java.util.Date dateTime = new java.util.Date();
+		
+		String query = "UPDATE users "
+				+"SET last_login ='"+new java.sql.Timestamp((dateTime).getTime())+"'"
+				+"WHERE user_id='"+userId+"'";
+		
+		st.execute(query);
 		
 	}
 	
