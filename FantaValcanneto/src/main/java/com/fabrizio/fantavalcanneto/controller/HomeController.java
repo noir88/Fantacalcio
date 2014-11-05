@@ -1,10 +1,12 @@
-package com.fabrizio.fantavalcanneto;
+package com.fabrizio.fantavalcanneto.controller;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import model.User;
 
 import org.postgresql.util.MD5Digest;
 import org.slf4j.Logger;

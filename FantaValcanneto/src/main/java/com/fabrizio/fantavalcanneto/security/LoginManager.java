@@ -6,8 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import com.fabrizio.fantavalcanneto.User;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import model.User;
+
 import com.fabrizio.fantavalcanneto.persistence.PostgresDbConnector;
 
 public class LoginManager {
@@ -26,9 +31,8 @@ public class LoginManager {
 		
 		st = connection.createStatement();
 		
-		String query = "SELECT username, nome, cognome, email, user_id, descrizione FROM users,ruoli "
-				+ "WHERE username ='"+username+"' and password_hashed ='"+hashed_pwd+"'"
-				+"and users.ruolo_id = ruoli.id_ruolo";
+		String query = "SELECT username, nome, cognome, email, user_id, descrizione FROM users "
+				+ "WHERE username ='"+username+"' and password_hashed ='"+hashed_pwd+"'";
 		
 		ResultSet rs = st.executeQuery(query);
 		
@@ -38,9 +42,10 @@ public class LoginManager {
 			user.setNome(rs.getString("nome"));
 			user.setCognome(rs.getString("cognome"));
 			user.setEmail(rs.getString("email"));
-			user.setRole(rs.getString("descrizione"));
+			user.setRole(rs.getString("ruolo"));
 			setLoginTime(rs.getInt("user_id"));
-			SessionManager.session().setAttribute("user", user);
+			request.getSession().setAttribute("utentes", user);
+			
 			resultPage="home";
 			
 		}
@@ -49,6 +54,7 @@ public class LoginManager {
 			request.setAttribute("loginError", "Username o password invalidi");
 		}
 		System.out.println("pagina" +resultPage);
+		connection.close();
 		return resultPage;
 		
 	}
@@ -67,6 +73,7 @@ public class LoginManager {
 				+"WHERE user_id='"+userId+"'";
 		
 		st.execute(query);
+		connection.close();
 		
 	}
 	

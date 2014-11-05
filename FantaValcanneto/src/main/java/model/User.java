@@ -1,4 +1,4 @@
-package com.fabrizio.fantavalcanneto;
+package model;
 
 public class User {
 	 
@@ -46,6 +46,13 @@ public class User {
 		this.email = email;
 	}
     
+	public boolean isUser(){
+		return this.getRole().equals("user");
+	}
+	
+	public boolean isAdmin(){
+		return this.getRole().equals("admin");
+	}
   
      
 }

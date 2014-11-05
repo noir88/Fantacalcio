@@ -2,7 +2,8 @@ package com.fabrizio.fantavalcanneto.persistence;
 
 import java.sql.*;
 
-import com.fabrizio.fantavalcanneto.User;
+import model.User;
+
 import com.fabrizio.fantavalcanneto.security.MailSender;
 import com.fabrizio.fantavalcanneto.security.Md5PasswordEncrypter;
 
@@ -38,13 +39,13 @@ public class RegistraUtente {
 			java.util.Date dateTime = new java.util.Date();
 			 st = connection.createStatement();
 			 String query= "INSERT INTO users "
-				 		+ "(username, password_hashed, nome, cognome, ruolo_id, squadra_corrente_id, last_login, "
+				 		+ "(username, password_hashed, nome, cognome, ruolo, squadra_corrente_id, last_login, "
 				 		+ "email)"
 				 		+ " VALUES ('"+user.getUserName()+"',"
 				 				+ " '"+encryptedPassword+"',"
 				 				+ " '"+user.getNome()+"',"
 				 				+ " '"+user.getCognome()+"',"
-				 				+ " '1',"
+				 				+ " 'user',"
 				 				+ " '-1',"
 				 				+ " '"+new java.sql.Timestamp((dateTime).getTime())+"',"
 				 				+ " '"+user.getEmail()+"');";
