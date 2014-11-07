@@ -8,7 +8,14 @@ public class User {
     private String password;
     private String email;
     private String role;
+    private int squadra_corrente_id;
     
+	public int getSquadra_corrente_id() {
+		return squadra_corrente_id;
+	}
+	public void setSquadra_corrente_id(int squadra_corrente_id) {
+		this.squadra_corrente_id = squadra_corrente_id;
+	}
 	public String getRole() {
 		return role;
 	}

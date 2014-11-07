@@ -31,7 +31,7 @@ public class LoginManager {
 		
 		st = connection.createStatement();
 		
-		String query = "SELECT username, nome, cognome, email, user_id, descrizione FROM users "
+		String query = "SELECT username, nome, cognome, ruolo, squadra_corrente_id, email, user_id FROM users "
 				+ "WHERE username ='"+username+"' and password_hashed ='"+hashed_pwd+"'";
 		
 		ResultSet rs = st.executeQuery(query);
@@ -44,6 +44,7 @@ public class LoginManager {
 			user.setEmail(rs.getString("email"));
 			user.setRole(rs.getString("ruolo"));
 			setLoginTime(rs.getInt("user_id"));
+			user.setSquadra_corrente_id(rs.getInt("squadra_corrente_id"));
 			request.getSession().setAttribute("utentes", user);
 			
 			resultPage="home";
