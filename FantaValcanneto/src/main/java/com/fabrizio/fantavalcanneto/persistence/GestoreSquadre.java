@@ -38,6 +38,59 @@ public class GestoreSquadre {
 		return users;
 		}
 	
+	public String inserisciSquadra(String nomeGiocatore, String nomeSquadra) throws Exception{
+		String esito="admin/FallimentoInserimentoSquadra";
+		
+		PostgresDbConnector connector = new PostgresDbConnector();
+		Connection connection = null;
+		connection = connector.connectToDB();
+		Statement st;
+		
+		try {
+			 st = connection.createStatement();
+			 String query= "SELECT user_id"
+				 		+ " FROM users "
+				 		+ " WHERE username = '"+nomeGiocatore+"'";
+				 				
+			ResultSet rs = st.executeQuery(query);
+			
+			int idGiocatore = -1;
+			
+			if (rs.next()){
+				idGiocatore = rs.getInt("user_id");
+			}
+			
+			st = connection.createStatement();
+			query = "INSERT INTO squadre("
+            +"nome, id_user" 
+            +")"
+            +"VALUES ('"+nomeSquadra+"', '"+idGiocatore+"'" 
+            +") RETURNING squadra_id; ";
+			
+			rs = st.executeQuery(query);
+			
+			int team_id = -1;
+			
+			if(rs.next()){
+				team_id = rs.getInt("squadra_id");
+			}
+			
+			st = connection.createStatement();
+			
+			query = "UPDATE users set squadra_corrente_id = '"+team_id+"' WHERE user_id = '"+idGiocatore+"';";
+			st.execute(query);
+			
+			esito = "/admin/TeamSuccessfullAdded";
+			
+				
+		} catch (SQLException e) {
+			connection.close();
+		}
+		connection.close();
+		
+		return esito;
+	}
+	
 	
 	}
 

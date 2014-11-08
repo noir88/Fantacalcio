@@ -47,7 +47,9 @@ public class LoginManager {
 			user.setSquadra_corrente_id(rs.getInt("squadra_corrente_id"));
 			request.getSession().setAttribute("utentes", user);
 			
-			resultPage="home";
+			
+				resultPage="home";
+			
 			
 		}
 		else{

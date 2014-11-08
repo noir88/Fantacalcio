@@ -2,6 +2,7 @@ package com.fabrizio.fantavalcanneto.controller;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -49,14 +50,27 @@ public class HomeController {
         return "login";
     }
      
-    @RequestMapping(value = "/CreaSquadra", method = RequestMethod.GET)
+    @RequestMapping(value = "admin/CreaSquadra", method = RequestMethod.GET)
     public String retrieveData(Model model, HttpServletRequest request) throws Exception {
     	GestoreSquadre gestoreSquadre = new GestoreSquadre();
     	
     	request.setAttribute("utentiSenzaSquadra", gestoreSquadre.trovaUserSenzaSquadra());
-    	return "FormInserimentoSquadra";
+    	return "admin/FormInserimentoSquadra";
     	
     }
+    
+    @RequestMapping(value="admin/inserisciSquadra", method= RequestMethod.GET)
+    	public String inserisciSquadra(HttpServletRequest request) throws Exception{
+    		String nomeSquadra = request.getParameter("nomeSquadra");
+    		String nomeGiocatore = request.getParameter("giocatore");
+    		
+    		GestoreSquadre gestoreSquadre = new GestoreSquadre();
+    		
+    		gestoreSquadre.inserisciSquadra(nomeGiocatore, nomeSquadra);
+    		return "ciao";
+    	}
+    	                                                                          
+    
     
     
     @RequestMapping(value = "/login", method = RequestMethod.POST)
