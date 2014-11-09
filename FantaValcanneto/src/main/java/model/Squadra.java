@@ -8,7 +8,6 @@ public class Squadra {
 	private String nomeSquadra;
 	private List<Integer> stagioniGiocateId;
 	private boolean inCurrentSeason;
-	private List<Integer> giocatoriCorrentiId;
 	private List<Integer> scontriGiocatiId;
 	
 	
@@ -54,12 +53,6 @@ public class Squadra {
 	}
 	public void setInCurrentSeason(boolean inCurrentSeason) {
 		this.inCurrentSeason = inCurrentSeason;
-	}
-	public List<Integer> getGiocatoriCorrentiId() {
-		return giocatoriCorrentiId;
-	}
-	public void setGiocatoriCorrentiId(List<Integer> giocatoriCorrentiId) {
-		this.giocatoriCorrentiId = giocatoriCorrentiId;
 	}
 	
 	

@@ -80,6 +80,8 @@ public class GestoreSquadre {
 			query = "UPDATE users set squadra_corrente_id = '"+team_id+"' WHERE user_id = '"+idGiocatore+"';";
 			st.execute(query);
 			
+			
+			
 			esito = "/admin/TeamSuccessfullAdded";
 			
 				
@@ -90,6 +92,7 @@ public class GestoreSquadre {
 		
 		return esito;
 	}
+	
 	
 	
 	}
