@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class GestoreSquadre {
 
@@ -93,6 +96,41 @@ public class GestoreSquadre {
 		return esito;
 	}
 	
+	
+	public Map<Integer,String> retrieveListOfPlayers(HttpServletRequest request, String ruolo, int idUser) throws SQLException{
+		
+		Map<Integer,String> risultato = new HashMap<Integer,String>();
+		
+		PostgresDbConnector connector = new PostgresDbConnector();
+		Connection connection = null;
+		connection = connector.connectToDB();
+		Statement st;
+		
+		try {
+			 st = connection.createStatement();
+			 String query= "SELECT * FROM CALCIATORI WHERE ruolo = '" +ruolo+"'"
+			 +" AND ID_SQUADRA_CORRENTE = (SELECT SQUADRA_CORRENTE_ID FROM USERS "
+			 + "WHERE SQUADRA_CORRENTE_ID ='"+idUser+"');";
+            
+
+			 ResultSet rs = st.executeQuery(query);
+			 
+			 while(rs.next()){
+				 risultato.put(rs.getInt("calciatore_id"), rs.getString("nome"));
+			 }
+			
+				
+				request.setAttribute("giocatori"+idUser+ruolo, risultato);
+		} catch (SQLException e) {
+			
+			request.setAttribute("errore", "Errore nell'estrazione dei giocatori della rosa");
+			connection.close();
+		}
+		connection.close();
+		
+		return risultato;
+		
+	}
 	
 	
 	}

@@ -1,7 +1,7 @@
 package model;
 
 public class User {
-	 
+	private int id_utente;
     private String userName;
     private String nome;
     private String cognome;
@@ -59,6 +59,12 @@ public class User {
 	
 	public boolean isAdmin(){
 		return this.getRole().equals("admin");
+	}
+	public int getId_utente() {
+		return id_utente;
+	}
+	public void setId_utente(int id_utente) {
+		this.id_utente = id_utente;
 	}
   
      

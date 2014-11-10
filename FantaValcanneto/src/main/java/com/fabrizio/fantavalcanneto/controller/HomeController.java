@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+
+
+
 import model.User;
 
 import org.postgresql.util.MD5Digest;
@@ -59,6 +62,12 @@ public class HomeController {
     	
     }
     
+    
+    @RequestMapping(value = "admin/FormInserimentoScontro", method = RequestMethod.GET)
+    public String sendToCreaScontro(HttpServletRequest request) throws Exception {
+    	return "admin/FormInserimentoScontro";
+    }
+    
     @RequestMapping(value="admin/inserisciSquadra", method= RequestMethod.GET)
     	public String inserisciSquadra(HttpServletRequest request) throws Exception{
     		String nomeSquadra = request.getParameter("nomeSquadra");
@@ -81,6 +90,19 @@ public class HomeController {
     	LoginManager lgmMgr = new LoginManager();
     	return lgmMgr.loginUser(user.getUserName(), user.getPassword(), request);
     	
+    	
+    }
+    
+    
+    @RequestMapping(value = "inserisciFormazione", method = RequestMethod.GET)
+    public String preparaFormazione(HttpSession session, HttpServletRequest request) throws Exception {
+    	String ruolo = "D";
+    	GestoreSquadre gestoreSquadre = new GestoreSquadre();
+    	Map<Integer,String> mappaCalciatori = 
+    			gestoreSquadre.retrieveListOfPlayers(request, ruolo, ((User)session.getAttribute("utentes")).getId_utente());
+    	
+    	request.setAttribute("lista"+ruolo, mappaCalciatori);
+    	return "InserimentoFormazione";
     }
    
     @RequestMapping(value = "/registraUtente", method = RequestMethod.POST)

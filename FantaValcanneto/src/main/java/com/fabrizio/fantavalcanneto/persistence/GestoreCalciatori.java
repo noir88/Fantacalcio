@@ -90,8 +90,9 @@ public class GestoreCalciatori {
 			 
 			 st = connection.createStatement();
 			  query= "update trasferimenti"
-            +"set timest_fine = '"+new java.sql.Timestamp((dateTime).getTime())+"' WHERE id_giocatore ='"+idGiocatore+"' AND"
-            +"id_squadra = '"+idSquadra+"' ORDER BY trasferimento_id desc limit 1;";
+            +"set timest_fine = '"+new java.sql.Timestamp((dateTime).getTime())+"' WHERE id = ("
+            		+ "SELECT id from trasferimenti where id_giocatore = '"+idGiocatore+"' and id_squadra = '"+idSquadra+" "
+            				+ "order by id desc limit 1;')";
 			 st.execute(query);
 			 
 			 
