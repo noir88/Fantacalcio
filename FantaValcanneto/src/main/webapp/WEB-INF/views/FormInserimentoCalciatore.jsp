@@ -8,9 +8,7 @@
 <script type="text/javascript" onload="loaded=1" src="<c:url value="/resources/js/jquery.js"/>"></script>
 <script type="text/javascript" onload="loaded=2" src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
 <script type="text/javascript" onload="loaded=3" src="<c:url value="/resources/js//bootstrapvalidator.js"/>"></script>
-<script type="text/javascript"  onload="loaded=4" src="<c:url value="/resources/js/RegistrationFormValidator.js"/>"></script>
-
-
+<script type="text/javascript"  onload="loaded=5" src="<c:url value="/resources/js/calciatoriRegisterFormValidator.js"/>"></script>
 
     <title>
         Prova
@@ -19,30 +17,30 @@
 <body>
 
 
- <c:if test="${ empty sessionScope.utentes}">
- <% response.sendRedirect("/fabrizio/"); %>
+ <c:if test="${! empty sessionScope.giocatoreInserito}">
+  ${sessionScope.giocatoreInserito} 
+  <% session.removeAttribute("giocatoreInserito"); %>
  </c:if>
- 
- <c:if test="${sessionScope.utentes.role != 'admin'}">
- 
- <%response.sendRedirect("/fabrizio/"); %>
- </c:if>
- 
- 
-<form action = "inserisciSquadra" class="registerForm col-xs-4" method="GET">
-    <div class="form-group">
-        <label>Nome Squadra</label>
-        <input type="text" class="form-control" name="nomeSquadra" />
-    
-    <select class="form-control" name="giocatore">
 
- <c:forEach items="${utentiSenzaSquadra}" var="users">
-    <option><c:out value="${users.value}"/></option>
-    </c:forEach>
-</select>  
+<form action = "registraCalciatore" class="registerForm col-xs-4" method="post">
+    <div class="form-group">
+        <label>Nome</label>
+        <input type="text" class="form-control" name="nome" />
     </div>
 
-    <input type="submit" value="Associa">
+<select class="form-control" name="ruolo">
+<option> Portiere</option>
+<option> Difensore</option>
+<option> Centrocampista</option>
+<option> Attaccante</option>
+</select>
+
+<div class="form-group">
+        <label>Squadra Reale</label>
+        <input type="text" class="form-control" name="squadraReale" />
+    </div>
+
+    <input type="submit" value="Salva">
 </form>
 </body>
 

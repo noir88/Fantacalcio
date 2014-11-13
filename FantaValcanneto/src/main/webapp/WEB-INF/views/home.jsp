@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!-- Latest compiled and minified CSS -->
-<link  href="<c:url value="/resources/css/bootstrap.css"/>" rel="stylesheet">
+<link  href="<c:url value="/resources/css/bootstrapTheme.css"/>" rel="stylesheet">
 <link  href="<c:url value="/resources/css/bootstrapformvalidator.css"/>" rel="stylesheet">
 <!-- Latest compiled and minified JavaScript -->
 <script type="text/javascript" onload="loaded=1" src="<c:url value="/resources/js/jquery.js"/>"></script>
@@ -222,5 +222,6 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 <a href="admin/CreaSquadra">crea</a>
+<a href="FormInserimentoCalciatore">inserisciCalc</a>
 </body>
 </html>

@@ -10,6 +10,9 @@ import javax.servlet.http.HttpSession;
 
 
 
+
+
+import model.Calciatore;
 import model.User;
 
 import org.postgresql.util.MD5Digest;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fabrizio.fantavalcanneto.persistence.GestoreCalciatori;
 import com.fabrizio.fantavalcanneto.persistence.GestoreSquadre;
 import com.fabrizio.fantavalcanneto.persistence.RegistraUtente;
 import com.fabrizio.fantavalcanneto.security.LoginManager;
@@ -93,6 +97,20 @@ public class HomeController {
     	
     }
     
+    @RequestMapping(value = "/registraCalciatore", method = RequestMethod.POST)
+    public String registraCalciatore(Calciatore calciatore, Model model, HttpSession session, 
+    		@RequestParam(value="errorMessage", required=false) String errorMessage,
+    		HttpServletRequest request) throws Exception {
+    	
+    	GestoreCalciatori gestoreCalciatori = new GestoreCalciatori();
+    	return gestoreCalciatori.creaCalciatore(calciatore.getRuolo(), calciatore.getNome(), calciatore.getSquadraReale(), request);
+    	
+    }
+    
+    @RequestMapping(value = "FormInserimentoCalciatore", method=RequestMethod.GET)
+    public String doNothing(){
+    	return "FormInserimentoCalciatore";
+    }
     
     @RequestMapping(value = "inserisciFormazione", method = RequestMethod.GET)
     public String preparaFormazione(HttpSession session, HttpServletRequest request) throws Exception {
@@ -118,6 +136,12 @@ public class HomeController {
     	
     	return nextPage;
     	
+    }
+    
+    
+    @RequestMapping(value = "FormRegistrazione", method = RequestMethod.GET)
+    public String getFormRegistrazione(HttpServletRequest request) throws Exception{
+    	return "FormRegistrazione";
     }
     
 }
