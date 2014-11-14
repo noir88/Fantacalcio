@@ -83,7 +83,13 @@ public class HomeController {
     		return "ciao";
     	}
     	                                                                          
-    
+    @RequestMapping(value="logout", method= RequestMethod.GET)
+    public String logout(HttpServletRequest request) throws Exception {
+    	LoginManager loginManager = new LoginManager();
+    	loginManager.logout(request);
+    	return "login";
+    	
+    }
     
     
     @RequestMapping(value = "/login", method = RequestMethod.POST)

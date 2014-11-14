@@ -11,6 +11,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import model.Squadra;
+
 public class GestoreSquadre {
 
 	public Map<Integer, String> trovaUserSenzaSquadra() throws SQLException{
@@ -130,6 +132,38 @@ public class GestoreSquadre {
 		
 		return risultato;
 		
+	}
+	
+	public Squadra fillDatiSquadra(int idSquadra) throws SQLException{
+		
+		Squadra squadra = new Squadra();
+		
+		PostgresDbConnector connector = new PostgresDbConnector();
+		Connection connection = null;
+		connection = connector.connectToDB();
+		Statement st;
+		
+		try {
+			 st = connection.createStatement();
+			 String query= "SELECT *"
+				 		+ " FROM squadre "
+				 		+ " WHERE squadra_id = " +idSquadra;
+				 				
+			ResultSet rs = st.executeQuery(query);
+			
+			if(rs.next()){
+				squadra.setSquadraId(idSquadra);
+				squadra.setNomeSquadra(rs.getString("nome"));
+				squadra.setInCurrentSeason(rs.getBoolean("in_current_season"));
+				
+			}
+			
+				
+		} catch (SQLException e) {
+			connection.close();
+		}
+		connection.close();
+		return squadra;
 	}
 	
 	

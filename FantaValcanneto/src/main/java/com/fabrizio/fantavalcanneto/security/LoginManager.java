@@ -5,15 +5,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import model.Squadra;
 import model.User;
 
+import com.fabrizio.fantavalcanneto.persistence.GestoreSquadre;
 import com.fabrizio.fantavalcanneto.persistence.PostgresDbConnector;
+import com.fabrizio.fantavalcanneto.persistence.UserManager;
 
 public class LoginManager {
 
@@ -46,6 +50,14 @@ public class LoginManager {
 			setLoginTime(rs.getInt("user_id"));
 			user.setSquadra_corrente_id(rs.getInt("squadra_corrente_id"));
 			request.getSession().setAttribute("utentes", user);
+			
+			GestoreSquadre gestoreSquadre = new GestoreSquadre();
+			Squadra squadra = new Squadra();
+			squadra = gestoreSquadre.fillDatiSquadra(user.getSquadra_corrente_id());
+			
+			if(squadra.getSquadraId() != 0)
+			request.getSession().setAttribute("squadra", squadra);
+			
 			
 			
 				resultPage="home";
@@ -80,6 +92,9 @@ public class LoginManager {
 		
 	}
 	
+	public void logout (HttpServletRequest request){
+		request.getSession().invalidate();
+	}
 
 		
 }

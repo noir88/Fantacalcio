@@ -6,9 +6,9 @@ public class Squadra {
 	private int squadraId;
 	private int userId;
 	private String nomeSquadra;
-	private List<Integer> stagioniGiocateId;
+
 	private boolean inCurrentSeason;
-	private List<Integer> scontriGiocatiId;
+
 	
 	
 	
@@ -19,15 +19,8 @@ public class Squadra {
 	public void setNomeSquadra(String nomeSquadra) {
 		this.nomeSquadra = nomeSquadra;
 	}
-	
-	
-	public List<Integer> getScontriGiocatiId() {
-		return scontriGiocatiId;
-	}
 
-	public void setScontriGiocatiId(List<Integer> scontriGiocatiId) {
-		this.scontriGiocatiId = scontriGiocatiId;
-	}
+
 
 	public int getSquadraId() {
 		return squadraId;
@@ -41,12 +34,6 @@ public class Squadra {
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
-	}
-	public List<Integer> getStagioniGiocateId() {
-		return stagioniGiocateId;
-	}
-	public void setStagioniGiocateId(List<Integer> stagioniGiocateId) {
-		this.stagioniGiocateId = stagioniGiocateId;
 	}
 	public boolean isInCurrentSeason() {
 		return inCurrentSeason;

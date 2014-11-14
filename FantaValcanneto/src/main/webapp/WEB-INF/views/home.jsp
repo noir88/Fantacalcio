@@ -46,7 +46,11 @@
  <c:if test="${sessionScope.utentes.role == 'admin'}">
  
      <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <%if (null == request.getSession().getAttribute("squadra")) {
+        	  %> no team <%
+          } else { %>
+          ${sessionScope.squadra.nomeSquadra }<%}; %> <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="inserisciFormazione">formaz</a></li>
             <li><a href="admin/FormInserimentoScontro">scontro</a></li>
@@ -70,13 +74,10 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#">Link</a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Benvenuto ${sessionScope.utentes.nome} 
+           <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a href="logout">Esci</a></li>
           </ul>
         </li>
       </ul>
