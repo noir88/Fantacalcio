@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 
 
+
 import model.Calciatore;
 import model.User;
 
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fabrizio.fantavalcanneto.persistence.GestoreCalciatori;
+import com.fabrizio.fantavalcanneto.persistence.GestoreMessaggi;
 import com.fabrizio.fantavalcanneto.persistence.GestoreSquadre;
 import com.fabrizio.fantavalcanneto.persistence.RegistraUtente;
 import com.fabrizio.fantavalcanneto.security.LoginManager;
@@ -113,9 +115,9 @@ public class HomeController {
     	
     }
     
-    @RequestMapping(value = "FormInserimentoCalciatore", method=RequestMethod.GET)
+    @RequestMapping(value = "admin/FormInserimentoCalciatore", method=RequestMethod.GET)
     public String doNothing(){
-    	return "FormInserimentoCalciatore";
+    	return "admin/FormInserimentoCalciatore";
     }
     
     @RequestMapping(value = "inserisciFormazione", method = RequestMethod.GET)
@@ -149,5 +151,18 @@ public class HomeController {
     public String getFormRegistrazione(HttpServletRequest request) throws Exception{
     	return "FormRegistrazione";
     }
+    
+    
+    @RequestMapping(value ="inserisciMessaggio", method = RequestMethod.POST)
+    public String inserisciMessaggio(HttpServletRequest request) throws Exception{
+    	GestoreMessaggi gestoreMessaggi = new GestoreMessaggi();
+    	gestoreMessaggi.InserisciMessaggio(request, request.getParameter("messaggio"));
+    	return "home";
+    }
+    
+@RequestMapping(value="admin/adminHome", method = RequestMethod.GET)
+public String doNothing(HttpServletRequest request){
+	return "admin/adminHome";
+}
     
 }

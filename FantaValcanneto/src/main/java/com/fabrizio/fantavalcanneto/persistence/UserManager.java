@@ -35,5 +35,34 @@ public class UserManager {
 		connection.close();
 		return nomeSquadra;
 	}
+	
+	
+	public String trovaNomeUtente(int idGiocatore) throws SQLException{
+		String nomeGiocatore = "";
+		
+		PostgresDbConnector connector = new PostgresDbConnector();
+		Connection connection = null;
+		connection = connector.connectToDB();
+		Statement st;
+		
+		try {
+			 st = connection.createStatement();
+			 String query= "SELECT username"
+				 		+ " FROM users "
+				 		+ " WHERE user_id = " +idGiocatore;
+				 				
+			ResultSet rs = st.executeQuery(query);
+			
+			if(rs.next()){
+				nomeGiocatore = rs.getString("username");
+			}
+			
+				
+		} catch (SQLException e) {
+			connection.close();
+		}
+		connection.close();
+		return nomeGiocatore;
+	}
 
 }

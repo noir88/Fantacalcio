@@ -42,6 +42,7 @@ public class LoginManager {
 		
 		if(rs.next()){
 			User user = new User();
+			user.setId_utente(rs.getInt("user_id"));
 			user.setUserName(rs.getString("username"));
 			user.setNome(rs.getString("nome"));
 			user.setCognome(rs.getString("cognome"));
