@@ -105,7 +105,7 @@ public class HomeController {
     	
     }
     
-    @RequestMapping(value = "/registraCalciatore", method = RequestMethod.POST)
+    @RequestMapping(value = "admin/registraCalciatore", method = RequestMethod.POST)
     public String registraCalciatore(Calciatore calciatore, Model model, HttpSession session, 
     		@RequestParam(value="errorMessage", required=false) String errorMessage,
     		HttpServletRequest request) throws Exception {
@@ -161,8 +161,14 @@ public class HomeController {
     }
     
 @RequestMapping(value="admin/adminHome", method = RequestMethod.GET)
-public String doNothing(HttpServletRequest request){
+public String doNothingAdminHome(HttpServletRequest request){
 	return "admin/adminHome";
+}
+    
+
+@RequestMapping(value="home", method = RequestMethod.GET)
+public String doNothingHome(HttpServletRequest request){
+	return "home";
 }
     
 }

@@ -9,11 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 
 public class GestoreCalciatori {
 	
+	public String getAcronimoSquadraReale(String nomeSquadra){
+		
+	return nomeSquadra.toUpperCase().substring(0, 3);	
+		
+	}
+	
 	
 	public String creaCalciatore(String ruolo, String nome, String squadraReale, HttpServletRequest request) throws Exception{
 		 //in realta torna la stessa pagina con il messaggio di richiesta
 		 
-		String esito="FormInserimentoCalciatore";
+		String esito="admin/FormInserimentoCalciatore";
 		
 		PostgresDbConnector connector = new PostgresDbConnector();
 		Connection connection = null;
@@ -31,17 +37,17 @@ public class GestoreCalciatori {
 			
 			 st = connection.createStatement();
 			 String query= "INSERT INTO calciatori("
-            +"nome, ruolo, squadra_reale)"
-            +"VALUES ('"+nome+"','"+idRuolo+"','"+squadraReale+"');";
+            +"nome, ruolo, squadra_reale, acronimo_squadra_reale)"
+            +"VALUES ('"+nome+"','"+idRuolo+"','"+squadraReale+"', '"+getAcronimoSquadraReale(squadraReale)+"');";
 
 				 				
 			 st.execute(query);
 			}
 			 //per mostrare nella pagina di inserimento
-			 request.getSession().setAttribute("giocatoreInserito","Giocatore Inserito Correttamente.");
+			 request.getSession().setAttribute("giocatoreInserito","Calciatore Inserito Correttamente.");
 				
 		} catch (SQLException e) {
-			request.getSession().setAttribute("giocatoreInserito", "Errore nell'inserimento del giocatore");
+			request.getSession().setAttribute("giocatoreInserito", "Calciatore già esistente");
 			connection.close();
 		}
 		connection.close();

@@ -13,16 +13,16 @@ $(document).ready(function() {
                 message: 'The name is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'The name is required and cannot be empty'
+                        message: 'Riempire il campo nome.'
                     },
                     stringLength: {
                         min: 3,
                         max: 30,
-                        message: 'The name must be more than 6 and less than 30 characters long'
+                        message: 'Almeno 3 caratteri.'
                     },
                     regexp: {
                         regexp: /^[a-zA-Z0-9_]+$/,
-                        message: 'The name can only consist of alphabetical, number and underscore'
+                        message: 'Solo lettere.'
                     }
                 }
             },
@@ -31,16 +31,16 @@ $(document).ready(function() {
                 message: 'The name is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'The name is required and cannot be empty'
+                        message: 'Riempire il campo squadra.'
                     },
                     stringLength: {
                         min: 3,
                         max: 30,
-                        message: 'The name must be more than 6 and less than 30 characters long'
+                        message: 'Almeno 3 caratteri.'
                     },
                     regexp: {
                         regexp: /^[a-zA-Z0-9_]+$/,
-                        message: 'The name can only consist of alphabetical, number and underscore'
+                        message: 'Solo lettere.'
                     }
                 }
             }

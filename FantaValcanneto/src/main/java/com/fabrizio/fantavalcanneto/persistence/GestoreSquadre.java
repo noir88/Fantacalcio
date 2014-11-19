@@ -43,6 +43,8 @@ public class GestoreSquadre {
 		return users;
 		}
 	
+
+	
 	public String inserisciSquadra(String nomeGiocatore, String nomeSquadra) throws Exception{
 		String esito="admin/FallimentoInserimentoSquadra";
 		

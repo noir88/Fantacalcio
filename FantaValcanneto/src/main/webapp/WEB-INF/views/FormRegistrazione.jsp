@@ -15,6 +15,8 @@
     </title>
 </head>
 <body>
+
+
 <form action = "registraUtente" class="registerForm col-xs-4" method="post">
     <div class="form-group">
         <label>Username</label>
@@ -36,6 +38,11 @@
     </div>
     <input type="submit" value="Registra">
 </form>
+
+
+
+ 
+
 </body>
 
 
