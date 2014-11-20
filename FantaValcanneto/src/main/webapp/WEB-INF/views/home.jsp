@@ -60,12 +60,11 @@
 							class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="inserisciFormazione">formaz</a></li>
-							<li><a href="admin/FormInserimentoScontro">scontro</a></li>
 							<li><a href="#">Something else here</a></li>
 							<li class="divider"></li>
 							<li><a href="#">Separated link</a></li>
 							<li class="divider"></li>
-							<li><a href="admin/CreaSquadra">Creazione Squadra</a></li>
+							<li><a href="CreaSquadra">Creazione Squadra</a></li>
 						</ul></li>
 
 			
@@ -76,9 +75,10 @@
 						data-toggle="dropdown"> Admin <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="admin/FormInserimentoScontro">scontro</a></li>
-							<li><a href="admin/CreaSquadra">Creazione Squadra</a></li>
-							<li><a href="admin/FormInserimentoCalciatore">Inserimento Calciatori</a></li>
+							<li><a href="FormInserimentoScontro">scontro</a></li>
+							<li><a href="CreaSquadra">Creazione Squadra</a></li>
+							<li><a href="FormInserimentoPartita">Inserimento Partita</a></li>
+							<li><a href="FormInserimentoCalciatore">Inserimento Calciatori</a></li>
 						</ul></li>
 
 				</c:if>

@@ -59,30 +59,32 @@ public class HomeController {
         return "login";
     }
      
-    @RequestMapping(value = "admin/CreaSquadra", method = RequestMethod.GET)
+    @RequestMapping(value = "CreaSquadra", method = RequestMethod.GET)
     public String retrieveData(Model model, HttpServletRequest request) throws Exception {
     	GestoreSquadre gestoreSquadre = new GestoreSquadre();
     	
     	request.setAttribute("utentiSenzaSquadra", gestoreSquadre.trovaUserSenzaSquadra());
-    	return "admin/FormInserimentoSquadra";
+    	return "FormInserimentoSquadra";
     	
     }
     
     
-    @RequestMapping(value = "admin/FormInserimentoScontro", method = RequestMethod.GET)
+    @RequestMapping(value = "FormInserimentoPartita", method = RequestMethod.GET)
     public String sendToCreaScontro(HttpServletRequest request) throws Exception {
-    	return "admin/FormInserimentoScontro";
+    	GestoreSquadre gestoresquadre = new GestoreSquadre();
+    	request.setAttribute("squadre", gestoresquadre.findAllTeams());
+    	return "FormInserimentoPartita";
     }
     
-    @RequestMapping(value="admin/inserisciSquadra", method= RequestMethod.GET)
+    @RequestMapping(value="inserisciSquadra", method= RequestMethod.GET)
     	public String inserisciSquadra(HttpServletRequest request) throws Exception{
     		String nomeSquadra = request.getParameter("nomeSquadra");
     		String nomeGiocatore = request.getParameter("giocatore");
     		
     		GestoreSquadre gestoreSquadre = new GestoreSquadre();
     		
-    		gestoreSquadre.inserisciSquadra(nomeGiocatore, nomeSquadra);
-    		return "ciao";
+    		gestoreSquadre.inserisciSquadra(nomeGiocatore, nomeSquadra, request);
+    		return "FormInserimentoSquadra";
     	}
     	                                                                          
     @RequestMapping(value="logout", method= RequestMethod.GET)
@@ -105,7 +107,7 @@ public class HomeController {
     	
     }
     
-    @RequestMapping(value = "admin/registraCalciatore", method = RequestMethod.POST)
+    @RequestMapping(value = "registraCalciatore", method = RequestMethod.POST)
     public String registraCalciatore(Calciatore calciatore, Model model, HttpSession session, 
     		@RequestParam(value="errorMessage", required=false) String errorMessage,
     		HttpServletRequest request) throws Exception {
@@ -115,9 +117,9 @@ public class HomeController {
     	
     }
     
-    @RequestMapping(value = "admin/FormInserimentoCalciatore", method=RequestMethod.GET)
+    @RequestMapping(value = "FormInserimentoCalciatore", method=RequestMethod.GET)
     public String doNothing(){
-    	return "admin/FormInserimentoCalciatore";
+    	return "FormInserimentoCalciatore";
     }
     
     @RequestMapping(value = "inserisciFormazione", method = RequestMethod.GET)
@@ -132,15 +134,11 @@ public class HomeController {
     }
    
     @RequestMapping(value = "/registraUtente", method = RequestMethod.POST)
-    public String registraUtente(User user, Model model) throws Exception {
+    public String registraUtente(User user, Model model, HttpServletRequest request) throws Exception {
     	
-    	String nextPage="";
-    	boolean registrazioneEffettuata = true;
     	RegistraUtente registratore = new RegistraUtente();
     	
-    	registrazioneEffettuata = registratore.registraUtente(user);
-    	
-    	nextPage=(registrazioneEffettuata? "RegistrazioneEffettuata" : "RegistrazioneFallita");
+    	String nextPage = registratore.registraUtente(user, request);
     	
     	return nextPage;
     	
@@ -160,9 +158,9 @@ public class HomeController {
     	return "home";
     }
     
-@RequestMapping(value="admin/adminHome", method = RequestMethod.GET)
+@RequestMapping(value="adminHome", method = RequestMethod.GET)
 public String doNothingAdminHome(HttpServletRequest request){
-	return "admin/adminHome";
+	return "adminHome";
 }
     
 

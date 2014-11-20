@@ -2,6 +2,8 @@ package com.fabrizio.fantavalcanneto.persistence;
 
 import java.sql.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 import model.User;
 
 import com.fabrizio.fantavalcanneto.security.MailSender;
@@ -21,9 +23,9 @@ public class RegistraUtente {
 		
 	}
 	
-	public boolean registraUtente(User user) throws Exception{
-		
-		Boolean inserito = false;
+	public String registraUtente(User user, HttpServletRequest request) throws Exception{
+		String nextPage="";
+		String esito="";
 		PostgresDbConnector connector = new PostgresDbConnector();
 		Connection connection = null;
 		connection = connector.connectToDB();
@@ -32,8 +34,6 @@ public class RegistraUtente {
 		Md5PasswordEncrypter passwordEncryptor = new Md5PasswordEncrypter();
 		String encryptedPassword = passwordEncryptor.encryptPasswordToMd5(user.getPassword());
 		
-		if(!(existsInTable(user.getUserName(), "users", "username")) || 
-				!(existsInTable(user.getEmail(), "users", "email"))){
 		
 		try {
 			java.util.Date dateTime = new java.util.Date();
@@ -51,19 +51,25 @@ public class RegistraUtente {
 				 				+ " '"+user.getEmail()+"');";
 				 				
 			st.execute(query);
-			inserito=true;
+			esito="Utente registrato.";
+			nextPage="home";
+			
 			//TODO sistemare interfaccia con gmail
 			//MailSender.sendRegistrationNotificationMail(user.getEmail(), user.getNome(), user.getCognome());
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			esito="Dati già presenti sul server.";
+			nextPage="FormRegistrazione";
+			connection.close();
 		}
+		request.getSession().setAttribute("esitoRegistrazione", esito);
 		connection.close();
+		return nextPage;
 		}
-		return inserito;
 		
 		
-	}
+		
+	
 	
 	public boolean existsInTable(String value, String tableName, String columnName) throws SQLException{
 		
